@@ -1,0 +1,11 @@
+<!--Plantilla base para los modales. -->
+<div id="modal-backdrop" class="fixed inset-0 bg-blue-950 bg-opacity-50 flex items-center justify-center z-50" hx-on:click="htmx.remove(this)">
+    <div id="modal-content" class="bg-blue-900 p-6 rounded-lg shadow-lg max-w-md w-full relative" hx-on:click="event.stopPropagation()">
+        <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-900" hx-on:click="htmx.remove(htmx.find('#modal-backdrop'))">
+            X
+        </button>
+        <div id="modal-body">
+            {{ content|safe }}
+        </div>
+    </div>
+</div>

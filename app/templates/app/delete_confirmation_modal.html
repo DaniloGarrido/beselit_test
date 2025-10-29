@@ -1,0 +1,8 @@
+<!--Plantilla para el modal de confirmacion de eliminacion de una tarea. -->
+<div class="p-4">
+    <p class="text-center text-lg mb-4">¿Estás seguro de que quieres eliminar la tarea "{{ task.title }}"?</p>
+    <div class="flex justify-center space-x-4">
+        <button hx-delete="/tasks/{{ task.id }}/delete/" hx-swap="outerHTML" hx-target="#task-{{ task.id }}" hx-trigger="click, taskDeleted from:body" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-red-500 text-white p-2 rounded">Sí, eliminar</button>
+        <button hx-on:click="document.getElementById('modals-here').innerHTML = ''" class="bg-gray-500 text-white p-2 rounded">Cancelar</button>
+    </div>
+</div>

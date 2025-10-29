@@ -1,0 +1,28 @@
+<!--Plantilla para el filtro de tareas. -->
+{% if total_tasks_count >= 1 %}
+<div id="task-filters" class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4" hx-target="#task-management-section" hx-swap="innerHTML">
+    <div class="flex gap-2">
+        <button hx-get="/tasks/" hx-target="#task-management-section" hx-swap="innerHTML" class="py-2 px-4 rounded {% if not status_filter and not search_query %}bg-blue-600{% else %}bg-gray-700{% endif %} hover:bg-blue-600">Todas</button>
+        <button hx-get="/tasks/?status=pending" hx-target="#task-management-section" hx-swap="innerHTML" class="py-2 px-4 rounded {% if status_filter == 'pending' %}bg-blue-600{% else %}bg-gray-700{% endif %} hover:bg-blue-600">Pendientes</button>
+        <button hx-get="/tasks/?status=completed" hx-target="#task-management-section" hx-swap="innerHTML" class="py-2 px-4 rounded {% if status_filter == 'completed' %}bg-blue-600{% else %}bg-gray-700{% endif %} hover:bg-blue-600">Completadas</button>
+    </div>
+    <div class="relative">
+        <input
+            type="search"
+            name="q"
+            placeholder="Buscar tareas..."
+            value="{{ search_query|default:'' }}"
+            hx-get="/tasks/"
+            hx-trigger="keyup changed delay:500ms, search"
+            hx-target="#task-management-section"
+            hx-swap="innerHTML"
+            class="w-full sm:w-64 p-2 pl-10 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500"
+        />
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,18 @@
+<!--Plantilla para el formulario de creacion de una tarea. -->
+<form hx-post="/tasks/create/" hx-target="#task-list" hx-swap="afterbegin" id="create-task-form" 
+    class="text-white mb-4  p-4 border border-blue-400 rounded shadow-md">
+
+    <p class="text-center text-2xl mb-5">Crear nueva tarea</p>
+    {% csrf_token %}
+    <div class="flex flex-col items-center space-y-2">
+    <input type="text" name="title" placeholder="Título de la tarea" class="p-2 border border-blue-400 rounded w-full" required value="{{ title }}">
+    <textarea name="description" placeholder="Descripción de la tarea" class="p-2 border border-blue-400 rounded w-full" required>{{ description }}</textarea>
+    </div>
+    <div class="flex justify-center space-x-2 mt-4">
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Crear Tarea</button>
+        <button type="reset" class="bg-gray-500 text-white p-2 rounded">Limpiar</button>
+    </div>
+    {% if error %}
+        {% include 'app/error_message.html' %}
+    {% endif %}
+</form>

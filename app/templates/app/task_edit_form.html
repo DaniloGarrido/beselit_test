@@ -1,0 +1,18 @@
+<!--Plantilla para el formulario de edicion de una tarea. -->
+<form hx-put="/tasks/{{ task.id }}/edit/" hx-target="#task-{{ task.id }}" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    class="text-white mb-4 p-4 border border-sky-500 rounded shadow-md">
+
+    <p class="text-center text-xl">Editar Tarea</p>
+    {% csrf_token %}
+    <div class="flex flex-col items-center space-y-2">
+        <input type="text" name="title" value="{{ task.title }}" class="p-2 border rounded w-full" required>
+        <textarea name="description" class="p-2 border rounded w-full" required>{{ task.description }}</textarea>
+    </div>
+    <div class="flex justify-center space-x-2 mt-4">
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Guardar</button>
+        <button type="reset" class="bg-gray-500 text-white p-2 rounded">Limpiar</button>
+    </div>
+    {% if error %}
+        {% include 'app/error_message.html' %}
+    {% endif %}
+</form>

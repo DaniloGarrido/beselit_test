@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Tareas Beselit</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Estilos del boton de switch, obtenido en uiverse.io -->
+    <style>
+      /* From Uiverse.io by mobinkakei */ 
+      .toggler { 
+        width: 72px; 
+      } 
+      
+      .toggler input { 
+        display: none; 
+      } 
+      
+      .toggler label { 
+        display: block; 
+        position: relative; 
+        width: 72px; 
+        height: 36px; 
+        border: 1px solid #d6d6d6; 
+        border-radius: 36px; 
+        background: #e4e8e8; 
+        cursor: pointer; 
+      } 
+      
+      .toggler label::after { 
+        display: block; 
+        border-radius: 100%; 
+        background-color: #d7062a; 
+        content: ''; 
+        animation-name: toggler-size; 
+        animation-duration: 0.15s; 
+        animation-timing-function: ease-out; 
+        animation-direction: forwards; 
+        animation-iteration-count: 1; 
+        animation-play-state: running; 
+      } 
+      
+      .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off { 
+        position: absolute; 
+        top: 50%; 
+        left: 25%; 
+        width: 26px; 
+        height: 26px; 
+        transform: translateY(-50%) translateX(-50%); 
+        transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out; 
+      } 
+      
+      .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off { 
+        left: 75%; 
+      } 
+      
+      .toggler input:checked + label::after { 
+        background-color: #50ac5d; 
+        animation-name: toggler-size2; 
+      } 
+      
+      .toggler .toggler-on, .toggler .toggler-off { 
+        opacity: 1; 
+        z-index: 2; 
+      } 
+      
+      .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on { 
+        width: 0; 
+        height: 0; 
+        opacity: 0; 
+      } 
+      
+      .toggler .path { 
+        fill: none; 
+        stroke: #fefefe; 
+        stroke-width: 7px; 
+        stroke-linecap: round; 
+        stroke-miterlimit: 10; 
+      } 
+      
+      @keyframes toggler-size { 
+        0%, 100% { 
+          width: 26px; 
+          height: 26px; 
+        } 
+      
+        50% { 
+          width: 20px; 
+          height: 20px; 
+        } 
+      } 
+      
+      @keyframes toggler-size2 { 
+        0%, 100% { 
+          width: 26px; 
+          height: 26px; 
+        } 
+      
+        50% { 
+          width: 20px; 
+          height: 20px; 
+        } 
+      } 
+    
+    </style>
+</head>
+<body class=" text-white container mx-auto p-4 bg-blue-950">
+    <h1 class=" text-2xl font-bold mb-4 text-center">Tareas</h1>
+    
+    <div class="flex justify-center mb-4">
+        <button hx-get="/tasks/create-modal/" hx-target="#modals-here" hx-swap="innerHTML" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Crear Nueva Tarea
+        </button>
+    </div>
+
+    <!-- Contenedor para el modal -->
+    <div id="modals-here"></div>
+
+    <!-- Formulario para agregar tarea -->
+    <div id="create-task-form-container" class="hidden">
+        {% include 'app/create_task_form.html' %}
+    </div>
+
+    <!--
+    Este script maneja la interactividad de la aplicación usando HTMX:
+    - 'closeModal': Cierra el modal eliminando el elemento '#modal-backdrop'.
+    - 'taskDeleted' y 'taskCreated': Refrescan la sección de gestión de tareas
+      ('#task-management-section') mediante una solicitud GET de HTMX a '/tasks/',
+      reemplazando su contenido. Esto asegura que la lista de tareas, los filtros
+      y el mensaje "No hay tareas" se actualicen dinámicamente sin recargar la página.
+    - 'htmx:configRequest': Intercepta las solicitudes HTMX para añadir el token CSRF
+      (Cross-Site Request Forgery) en el encabezado 'X-CSRFToken', lo cual es
+      necesario para la seguridad en Django.
+    -->
+    <script>
+        document.body.addEventListener('closeModal', function() {
+            const modalBackdrop = htmx.find('#modal-backdrop');
+            if (modalBackdrop) {
+                htmx.remove(modalBackdrop);
+            }
+        });
+
+        document.body.addEventListener('taskDeleted', function() {
+            console.log('taskDeleted event received. Initiating HTMX GET request to /tasks/ to refresh task management section.');
+            htmx.ajax('GET', '/tasks/', { target: '#task-management-section', swap: 'outerHTML' });
+        });
+
+        document.body.addEventListener('taskCreated', function() {
+            console.log('taskCreated event received. Initiating HTMX GET request to /tasks/ to refresh task management section.');
+            htmx.ajax('GET', '/tasks/', { target: '#task-management-section', swap: 'outerHTML' });
+        });
+
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            event.detail.headers['X-CSRFToken'] = csrfToken;
+        });
+    </script>
+
+    {% include 'app/task_management_section.html' %}
+
+</body>
+</html>

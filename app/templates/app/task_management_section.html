@@ -1,0 +1,12 @@
+<!--Plantilla para la seccion de gestion de tareas. -->
+<div id="task-management-section">
+    {% include 'app/task_filters.html' with total_tasks_count=total_tasks_count status_filter=status_filter search_query=search_query %}
+    <!-- Contenedor para la lista de tareas y mensajes -->
+    <div id="task-list-container">
+        <!-- Lista de tareas -->
+        <div id="task-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+             {% include 'app/task_list_content.html' %}
+         </div>
+        <p id="no-tasks-message" class="text-center text-gray-500 {% if tasks_count > 0 %}hidden{% endif %}">No existen tareas.</p>
+    </div>
+</div>

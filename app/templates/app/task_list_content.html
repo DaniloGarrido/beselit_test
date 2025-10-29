@@ -1,0 +1,31 @@
+<!--Plantilla para la lista de tareas. -->
+{% for task in tasks %}
+    <div id="task-{{ task.id }}" class="shadow-sm bg-blue-900 p-4 rounded flex flex-col w-full transition-all duration-500 ease-in-out">
+        <div class="flex justify-center space-x-1 mb-2">
+            <div class="toggler w-12 h-6 scale-50">
+                <input id="toggler-{{ task.id }}" name="toggler-{{ task.id }}" type="checkbox" value="1"
+                       hx-put="/tasks/{{ task.id }}/toggle/" hx-target="#task-{{ task.id }}" hx-swap="outerHTML" {% if task.completed %}checked{% endif %}>
+                <label for="toggler-{{ task.id }}">
+                    <svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                        <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+                    </svg>
+                    <svg class="toggler-off" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                        <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+                        <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+                    </svg>
+                </label>
+            </div>
+            <button hx-get="/tasks/{{ task.id }}/edit-modal/" hx-target="#modals-here" hx-swap="innerHTML" class="bg-yellow-500 text-white p-1 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                ✏️
+            </button>
+            <button hx-get="/tasks/{{ task.id }}/delete-modal/" hx-target="#modals-here" hx-swap="innerHTML" class="bg-red-500 text-white p-1 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                X
+            </button>
+        </div>
+        <hr class="my-2 border-blue-950 w-full">
+        <div class="text-center">
+            <h3 class="font-bold text-xl {% if task.completed %}line-through text-gray-500{% endif %} truncate">{{ task.title }}</h3>
+            <p class="text-gray-600">{{ task.description }}</p>
+        </div>
+    </div>
+{% endfor %}
