@@ -1,0 +1,110 @@
+# 🚀 Desafío Técnico - Desarrollador Full Stack @ Besimplit
+
+## Contexto
+
+En Besimplit trabajamos con Django, HTMX y Tailwind CSS para crear sistemas e interfaces dinámicas y modernas. Este desafío simula una tarea real que podrías hacer en tu día a día.
+
+---
+
+## 📝 El Reto: Sistema de Tareas Simple
+
+Crea una aplicación web donde los usuarios puedan:
+
+1. ✅ **Ver una lista de tareas** LISTO
+2. ✅ **Agregar nuevas tareas** (título + descripción) LISTO
+3. ✅ **Actualizar tarea** LISTO
+4. ✅ **Marcar tareas como completadas/pendientes** (toggle)
+5. ✅ **Eliminar tareas** LISTO
+6. **✅ Crear un API para consultar y crear tareas** LISTO CON SWAGGER
+
+**Todo debe funcionar SIN recargar la página completa usando HTMX.**
+
+---
+
+## 🛠️ Requisitos Técnicos
+
+### Obligatorio:
+
+- 🐍 Django y Django Rest Framework
+- ⚡ HTMX para todas las interacciones
+- 🎨 Tailwind CSS para estilos (vía CDN está bien)
+- 💾 SQLite (default de Django)
+- Un solo modelo `Task` con campos:
+    - `title`
+    - `description`
+    - `completed`
+    - `created_at`
+- Incluye un command o migration para crear datos de demo para visualizar tu solución
+
+### NO es necesario:
+
+- Sistema de usuarios/autenticación
+- Deploy
+- Base de datos compleja
+- Diseño ultra elaborado (pero sí limpio y usable)
+
+## 🌟 Bonus Opcionales
+
+Si completas el desafío principal y te sobra tiempo, puedes agregar **UNO** de estos bonus:
+
+### Opción A: UI/UX 🎨
+
+Mejora la experiencia de usuario con Tailwind:
+
+- Animaciones suaves (transitions, transforms) LISTO 
+- Filtros interactivos (completadas/pendientes/buscar) LISTO
+- Responsive design. Listo
+- Estados hover/focus mejorados LISTO en los filtros
+
+### Opción B: Dashboard Analítico 📊
+
+Crea una página `/dashboard` con:
+
+- Estadísticas de tareas (total, completadas, %)
+- Gráfico o visualización simple
+
+### Opción C: Export de Reportes 📥
+
+Agrega funcionalidad para exportar reportes/informes de las tareas:
+
+- Botón "Exportar" en la interfaz
+- Formato: CSV, Excel (.xlsx) o PDF (elige uno)
+- Ejemplo: Nº Tareas creadas, Nº tareas pendientes y completadas, usuarios con mas tareas completadas, etc.
+
+**Importante:** Los bonus NO son obligatorios. El desafío principal es lo fundamental. Los bonus solo te permiten mostrar más de tus fortalezas.
+
+## 📦 Entrega
+
+1. **Sube tu código a GitHub** (repo público)
+2. **Incluye un [README.md](http://readme.md/)** con:
+    - Instrucciones para correr el proyecto (setup)
+    - Decisiones técnicas que tomaste y por qué
+    - Si tuviste que hacer trade-offs, ¿cuáles y por qué?
+    - (Opcional) Qué mejorarías con más tiempo
+3. **Envía el link a bastian@besimplit.com**
+
+## 🎯 Qué Evaluaremos
+
+1. **Funcionalidad:** ¿Hace lo que se pidió?
+2. **Código:** ¿Es legible y está organizado?
+3. **HTMX:** ¿Usaste HTMX apropiadamente?
+4. **Tailwind:** ¿Usaste las utilities correctamente?
+5. **README:** ¿Explicaste tu proceso de pensamiento?
+6. **Pragmatismo:** ¿Balanceaste calidad vs velocidad?
+
+---
+
+## ❓ Preguntas Frecuentes
+
+**P: ¿Debo hacer un bonus?**
+R: No. Si tienes un core perfecto en 90 min, eso es suficiente.
+
+**P: ¿Puedo usar IA?**
+R: Sí, usamos IA en el día a día. Lo importante es que entiendas el código que entregas.
+
+**P: ¿Necesito tests?**
+R: No son obligatorios pero suman puntos si tienes tiempo.
+
+Si algo no está claro, escribe a bastian@besimplit.com.
+
+¡Buena suerte! 🚀

@@ -1,0 +1,27 @@
+# Ignorar entornos virtuales
+venv/
+.venv/
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Ignorar base de datos SQLite
+db.sqlite3
+
+# Ignorar archivos de configuración de entorno
+.env
+.flaskenv
+
+# Ignorar archivos de medios y estáticos generados
+/media
+/static
+
+# Ignorar archivos de IDE (ej. VS Code)
+.vscode/
+.idea/
+
+# Ignorar logs
+*.log
